@@ -3,7 +3,7 @@
 // Modified date: 27/02/2021
 //
 
-#include "mir_xbox_test_01.h"
+#include "../include/mir_test/mir_xbox_test_01.h"
 
 #include <ros/ros.h>
 #include <geometry_msgs/TwistStamped.h>
