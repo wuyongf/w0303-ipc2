@@ -1,8 +1,8 @@
-cmake_minimum_required(VERSION 3.0.2)
+cmake_minimum_required(VERSION 3.10.2)
 project(mir_test)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
- add_compile_options(-std=c++11)
+add_compile_options(-std=c++17)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -13,6 +13,11 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
 )
+
+find_package (glog 0.5.0 REQUIRED)
+
+set(nanodbc_DIR /home/nw/Downloads/third_party/nanodbc/build)
+find_package(nanodbc CONFIG REQUIRED)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -155,13 +160,14 @@ include_directories(
 #   ${catkin_LIBRARIES}
 # )
 
- add_executable(mir_xbox_test_01 src/mir_xbox_test_01.cpp)
- target_link_libraries(mir_xbox_test_01  PUBLIC   ${catkin_LIBRARIES} )
- target_include_directories(mir_xbox_test_01 PRIVATE ${CMAKE_BINARY_DIR})
+#
 
-add_executable(mir_xbox_test_02 src/mir_xbox_test_02.cpp)
-target_link_libraries(mir_xbox_test_02  PUBLIC   ${catkin_LIBRARIES} )
-target_include_directories(mir_xbox_test_02 PRIVATE ${CMAKE_BINARY_DIR})
+ add_executable(mir_xbox_test_01 src/mir_xbox_test_01.cpp include/w0303-ipc2/sql.h)
+ target_link_libraries(mir_xbox_test_01  PUBLIC   ${catkin_LIBRARIES} glog::glog  nanodbc)
+ target_include_directories(mir_xbox_test_01 PRIVATE ${CMAKE_BINARY_DIR} glog::glog  nanodbc)
+
+add_executable(sql_testing src/sql_testing.cpp)
+target_link_libraries(sql_testing  PUBLIC   ${catkin_LIBRARIES} nanodbc)
 
 #############
 ## Install ##
