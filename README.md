@@ -1,10 +1,12 @@
 # w0303-ipc2
 
-function:
+**Functions Overall**
 
 1. manual control mir via joystick (ros)
 
 2. communication with mssql
+
+3. *todo: communication with ipc1
 
 
 **Environment Setup**
@@ -33,3 +35,4 @@ prerequisite:
    
    (1) https://docs.microsoft.com/en-us/sql/connect/odbc/linux-mac/installing-the-microsoft-odbc-driver-for-sql-server?view=sql-server-ver15
 
+   (2) https://stackoverflow.com/questions/43606832/r-unixodbcdriver-managercant-open-lib-sql-server-file-not-found/51266453

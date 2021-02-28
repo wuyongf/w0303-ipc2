@@ -16,12 +16,13 @@
 #include <thread>
 
 // sql
-#include "../include/w0303-ipc2/sql.h"
+#include "../include/w0303-ipc2/sql_ubuntu.h"
 
-class TeleopTurtle
+class TeleopMir
 {
 public:
-    TeleopTurtle();
+    TeleopMir();
+    virtual ~TeleopMir(){};
 
 private:
 
@@ -46,10 +47,16 @@ private:
 
     std::thread th_keep_moving;
 
+    float average_speed;
+
+    // sql
+    yf::sql::sql_server sql_ubuntu;
+
+    int sys_control_mode_;
 };
 
 
-TeleopTurtle::TeleopTurtle():
+TeleopMir::TeleopMir():
         linear_(1),
         angular_(0),
         l_scale_(0.2),
@@ -58,7 +65,7 @@ TeleopTurtle::TeleopTurtle():
         safety_button_rt_(5)
 {
 
-    th_keep_moving = std::thread( &TeleopTurtle::ThreadKeepMoving, this,
+    th_keep_moving = std::thread( &TeleopMir::ThreadKeepMoving, this,
             std::ref(thread_flag), std::ref(keep_moving_flag),
             std::ref(latest_linear_velocity), std::ref(latest_angular_velocity));
 
@@ -71,55 +78,71 @@ TeleopTurtle::TeleopTurtle():
 
     vel_pub_ = nh_.advertise<geometry_msgs::TwistStamped>("/cmd_vel", 1);
 
-    joy_sub_ = nh_.subscribe<sensor_msgs::Joy>("joy", 10, &TeleopTurtle::joyCallback, this);
+    joy_sub_ = nh_.subscribe<sensor_msgs::Joy>("joy", 10, &TeleopMir::joyCallback, this);
 
 }
 
-void TeleopTurtle::joyCallback(const sensor_msgs::Joy::ConstPtr& joy)
+void TeleopMir::joyCallback(const sensor_msgs::Joy::ConstPtr& joy)
 {
-    keep_moving_flag = false;
-    latest_linear_velocity = l_scale_*joy->axes[linear_];
-    latest_angular_velocity = a_scale_*joy->axes[angular_];
+    // 1. Check sys control mode: 0 --- auto; 1 --- manual; 2 --- manual_setting
+    sys_control_mode_ = sql_ubuntu.GetSysControlMode();
 
-    if(joy->axes[safety_button_rt_] != -1 || joy->buttons[safety_button_x_] != 1)
+    if(sys_control_mode_ == 1 || sys_control_mode_ == 2)
     {
-        geometry_msgs::TwistStamped twist;
+        keep_moving_flag = false;
+        latest_linear_velocity = l_scale_*joy->axes[linear_];
+        latest_angular_velocity = a_scale_*joy->axes[angular_];
 
-        twist.twist.angular.z = 0;
-        twist.twist.linear.x = 0;
-        vel_pub_.publish(twist);
-
-    }
-
-    if (joy->axes[safety_button_rt_] == -1 && joy->buttons[safety_button_x_] == 1)
-    {
-        geometry_msgs::TwistStamped twist;
-
-        if (a_scale_*joy->axes[angular_] == 0 && l_scale_*joy->axes[linear_] == 0)
+        // safety trigger
+        //
+        if(joy->axes[safety_button_rt_] != -1 || joy->buttons[safety_button_x_] != 1)
         {
+            geometry_msgs::TwistStamped twist;
+
             twist.twist.angular.z = 0;
             twist.twist.linear.x = 0;
             vel_pub_.publish(twist);
         }
 
-        if (a_scale_*joy->axes[angular_] != 0 || l_scale_*joy->axes[linear_] != 0)
+        // high speed mode
+        //
+        if (joy->axes[safety_button_rt_] == -1 && joy->buttons[safety_button_x_] == 1)
         {
-            twist.twist.angular.z = latest_angular_velocity;
-            twist.twist.linear.x = latest_linear_velocity;
-            vel_pub_.publish(twist);
+            geometry_msgs::TwistStamped twist;
+
+            if (a_scale_*joy->axes[angular_] == 0 && l_scale_*joy->axes[linear_] == 0)
+            {
+                twist.twist.angular.z = 0;
+                twist.twist.linear.x = 0;
+                vel_pub_.publish(twist);
+            }
+
+            if (a_scale_*joy->axes[angular_] != 0 || l_scale_*joy->axes[linear_] != 0)
+            {
+                twist.twist.angular.z = latest_angular_velocity;
+                twist.twist.linear.x = latest_linear_velocity;
+                vel_pub_.publish(twist);
+            }
+
+            if ( joy->axes[angular_] > 0.9 || joy->axes[angular_] < -0.9 ||
+                 joy->axes[linear_]  > 0.9 || joy->axes[linear_]  < -0.9 )
+            {
+                keep_moving_flag = true;
+            }
         }
 
-        if ( joy->axes[angular_] > 0.9 || joy->axes[angular_] < -0.9 ||
-             joy->axes[linear_]  > 0.9 || joy->axes[linear_]  < -0.9 )
-        {
-            keep_moving_flag = true;
-        }
+        //todo: (1) low speed mode (button_rt & button_y)
+        //      (2) fine tune the average_speed?? > 0.9 ===> > 0.7?
+
     }
-
+    else
+    {
+        // do nothing, no need to response.
+    }
 }
 
-void TeleopTurtle::ThreadKeepMoving(const bool& thread_flag, const bool& keep_moving_flag,
-                                    const double& latest_linear_velocity, const double& latest_angular_velocity)
+void TeleopMir::ThreadKeepMoving(const bool& thread_flag, const bool& keep_moving_flag,
+                                 const double& latest_linear_velocity, const double& latest_angular_velocity)
 {
     geometry_msgs::TwistStamped twist_max;
 
@@ -142,9 +165,9 @@ void TeleopTurtle::ThreadKeepMoving(const bool& thread_flag, const bool& keep_mo
 
 int main(int argc, char** argv)
 {
-    ros::init(argc, argv, "teleop_turtle");
+    ros::init(argc, argv, "teleop_mir");
 
-    TeleopTurtle teleop_turtle;
+    TeleopMir teleop_mir;
 
     ros::spin();
 }

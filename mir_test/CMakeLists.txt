@@ -162,12 +162,12 @@ include_directories(
 
 #
 
- add_executable(mir_xbox_test_01 src/mir_xbox_test_01.cpp include/w0303-ipc2/sql.h)
+ add_executable(mir_xbox_test_01 src/mir_xbox_test_01.cpp include/w0303-ipc2/sql_ubuntu.h)
  target_link_libraries(mir_xbox_test_01  PUBLIC   ${catkin_LIBRARIES} glog::glog  nanodbc)
  target_include_directories(mir_xbox_test_01 PRIVATE ${CMAKE_BINARY_DIR} glog::glog  nanodbc)
 
 add_executable(sql_testing src/sql_testing.cpp)
-target_link_libraries(sql_testing  PUBLIC   ${catkin_LIBRARIES} nanodbc)
+target_link_libraries(sql_testing  PUBLIC   ${catkin_LIBRARIES} glog::glog nanodbc)
 
 #############
 ## Install ##
