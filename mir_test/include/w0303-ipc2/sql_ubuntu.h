@@ -99,6 +99,8 @@ public:
     // Sys Status
     int GetSysControlMode();
 
+    void NotifyUserSwitchToManualMode();
+
 private:
 
     nanodbc::connection conn_;
@@ -810,6 +812,27 @@ int yf::sql::sql_server::GetSysControlMode()
         std::cerr << "EXIT_FAILURE: " << EXIT_FAILURE << std::endl;
 
         return -999;
+    }
+}
+
+void yf::sql::sql_server::NotifyUserSwitchToManualMode()
+{
+    std::string query_update;
+
+    try
+    {
+        Connect();
+
+        query_update = "UPDATE sys_status SET advice = 2, modified_date='" + TimeNow() + "' WHERE name = 'nw_sys'" ;
+
+        nanodbc::execute(conn_,query_update);
+
+        Disconnect();
+    }
+    catch (std::exception& e)
+    {
+        std::cerr << e.what() << std::endl;
+        std::cerr << "EXIT_FAILURE: " << EXIT_FAILURE << std::endl;
     }
 }
 

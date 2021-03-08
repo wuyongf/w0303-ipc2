@@ -16,6 +16,7 @@
 #include <thread>
 
 // sql
+//
 #include "../include/w0303-ipc2/sql_ubuntu.h"
 
 class TeleopMir
@@ -35,7 +36,8 @@ private:
 
     int linear_, angular_;
     double l_scale_, a_scale_;
-    int safety_button_x_, safety_button_rt_;
+    int safety_button_x_, safety_button_y_;
+    int safety_axes_rt_;
     ros::Publisher vel_pub_;
     ros::Subscriber joy_sub_;
 
@@ -62,7 +64,8 @@ TeleopMir::TeleopMir():
         l_scale_(0.2),
         a_scale_(0.2),
         safety_button_x_(2),
-        safety_button_rt_(5)
+        safety_button_y_(3),
+        safety_axes_rt_(5)
 {
 
     th_keep_moving = std::thread( &TeleopMir::ThreadKeepMoving, this,
@@ -74,7 +77,7 @@ TeleopMir::TeleopMir():
     nh_.param("scale_angular", a_scale_, a_scale_);
     nh_.param("scale_linear", l_scale_, l_scale_);
     nh_.param("safety_button_x", safety_button_x_, safety_button_x_);
-    nh_.param("safety_button_rt", safety_button_rt_, safety_button_rt_);
+    nh_.param("safety_button_rt", safety_axes_rt_, safety_axes_rt_);
 
     vel_pub_ = nh_.advertise<geometry_msgs::TwistStamped>("/cmd_vel", 1);
 
@@ -84,18 +87,40 @@ TeleopMir::TeleopMir():
 
 void TeleopMir::joyCallback(const sensor_msgs::Joy::ConstPtr& joy)
 {
+    // 0. Initialization, default speed
+
+    l_scale_ = 0.2 ;
+    a_scale_ = 0.2 ;
+
     // 1. Check sys control mode: 0 --- auto; 1 --- manual; 2 --- manual_setting
     sys_control_mode_ = sql_ubuntu.GetSysControlMode();
 
     if(sys_control_mode_ == 1 || sys_control_mode_ == 2)
     {
         keep_moving_flag = false;
+
+        bool safety_button = (joy->buttons[safety_button_x_] == 1 || joy->buttons[safety_button_y_] == 1) ;
+
+        if(safety_button)
+        {
+            if(joy->buttons[safety_button_x_] == 1)
+            {
+                l_scale_ = 0.2 ;
+                a_scale_ = 0.2 ;
+            }
+            else if (joy->buttons[safety_button_y_] == 1)
+            {
+                l_scale_ = 0.4 ;
+                a_scale_ = 0.4 ;
+            }
+        }
+
         latest_linear_velocity = l_scale_*joy->axes[linear_];
         latest_angular_velocity = a_scale_*joy->axes[angular_];
 
         // safety trigger
         //
-        if(joy->axes[safety_button_rt_] != -1 || joy->buttons[safety_button_x_] != 1)
+        if(joy->axes[safety_axes_rt_] != -1 || safety_button != 1)
         {
             geometry_msgs::TwistStamped twist;
 
@@ -106,7 +131,7 @@ void TeleopMir::joyCallback(const sensor_msgs::Joy::ConstPtr& joy)
 
         // high speed mode
         //
-        if (joy->axes[safety_button_rt_] == -1 && joy->buttons[safety_button_x_] == 1)
+        if (joy->axes[safety_axes_rt_] == -1 && safety_button == 1)
         {
             geometry_msgs::TwistStamped twist;
 
@@ -137,7 +162,9 @@ void TeleopMir::joyCallback(const sensor_msgs::Joy::ConstPtr& joy)
     }
     else
     {
-        // do nothing, no need to response.
+        //todo: Notify the User/Admin to switch the sys_control_mode to Manual Mode?
+
+        sql_ubuntu.NotifyUserSwitchToManualMode();
     }
 }
 

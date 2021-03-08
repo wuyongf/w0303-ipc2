@@ -169,6 +169,13 @@ include_directories(
 add_executable(sql_testing src/sql_testing.cpp)
 target_link_libraries(sql_testing  PUBLIC   ${catkin_LIBRARIES} glog::glog nanodbc)
 
+# For POCO  & MiR
+
+find_package(Poco REQUIRED COMPONENTS Foundation Net Zip )
+
+add_executable(mir_poco src/mir_poco.cpp)
+target_link_libraries(mir_poco  PUBLIC   ${catkin_LIBRARIES} glog::glog nanodbc Poco::Foundation Poco::Zip Poco::Net)
+
 #############
 ## Install ##
 #############
