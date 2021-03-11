@@ -11,7 +11,7 @@
 
 **Environment Setup**
 
-hardware: raspberry pi 4
+hardware: raspberry pi 4b
 
 platform: ubuntu 18.04
 
@@ -22,6 +22,8 @@ prerequisite:
    (1) https://www.hackster.io/shahizat005/getting-started-with-ros-melodic-on-raspberry-pi-4-model-b-cbdec8
 
    (2) http://wiki.ros.org/melodic/Installation/Ubuntu
+   
+   (3) https://blog.csdn.net/kinglarry1/article/details/107155753
    
 2. glog
    
@@ -42,6 +44,10 @@ prerequisite:
 5. ros-joy-package
 
    (1)http://wiki.ros.org/joy/Tutorials
+   
+6. xbox controller driver
+
+   (1)https://github.com/medusalix/xow
 
 **How to use**
 1. connect mir wifi
