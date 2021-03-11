@@ -44,6 +44,10 @@ prerequisite:
 5. ros-joy-package
 
    (1)http://wiki.ros.org/joy/Tutorials
+   
+6. xbox controller driver
+
+   (1)https://github.com/medusalix/xow
 
 **How to use**
 1. connect mir wifi
