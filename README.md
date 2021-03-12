@@ -4,7 +4,9 @@
 
 1. manual control mir via joystick (ros)
 
-2. communication with mssql
+2. ~~communication with mssql~~ 
+
+> SQL Server is not supported on ARM architecture.
 
 3. *todo: communication with ipc1
 
@@ -61,7 +63,7 @@ prerequisite:
          export ROS_MASTER_URI=http://192.168.12.20:11311
          export ROS_HOSTNAME=[your ip address]  //e.g. export ROS_HOSTNAME=192.168.12.254
          source ~/.bashrc
-4. run the program
+4. run the program 
 
          roscore
          rosrun joy joy_node

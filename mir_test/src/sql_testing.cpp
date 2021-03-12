@@ -36,11 +36,32 @@ try
     FLAGS_log_dir = "/home/nw/catkin_ws/src/mir_test/logs";
     google::InitGoogleLogging(argv[0]);
 
-    nanodbc::connection conn("Driver={ODBC Driver 17 for SQL Server};Server=192.168.0.8;Database=NW_mobile_robot_sys;Uid=sa;Pwd=Willsonic2010");
+//    nanodbc::connection conn("Driver={ODBC Driver 17 for SQL Server};Server=192.168.0.8;Database=NW_mobile_robot_sys;Uid=sa;Pwd=Willsonic2010");
 
-    std::cout << "connected? " << conn.connected() << std::endl;
+//    nanodbc::connection conn1("Driver={FreeTDS};Server=192.168.0.8;Database=NW_mobile_robot_sys;Uid=sa;Pwd=Willsonic2010");
 
-    conn.disconnect();
+    nanodbc::connection conn1("Driver={FreeTDS};Server=192.168.0.8;Port=1433;Database=NW_mobile_robot_sys;Uid=sa;Pwd=Willsonic2010");
+
+    auto list = nanodbc::list_drivers();
+
+    std::cout << "connected? " << conn1.connected() << std::endl;
+
+
+    std::string query_update = "SELECT control_mode FROM sys_status where ID = 1 AND name = 'nw_sys' ";
+
+    std::string sys_control_mode;
+
+    auto result = nanodbc::execute(conn1,query_update);
+
+    while(result.next())
+    {
+       std::cout << "control mode result: " << result.get<std::string>(0, "null") << std::endl;
+    };
+
+
+    std::cout << conn1.driver_name()<< std::endl;
+
+    conn1.disconnect();
 
     std::cout << "time now: " << getCurrentTimeStr() << std::endl;
 
