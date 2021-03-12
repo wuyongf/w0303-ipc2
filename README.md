@@ -48,6 +48,10 @@ prerequisite:
 6. xbox controller driver
 
    (1)https://github.com/medusalix/xow
+   
+**Test**
+
+(1) unixODBC & FreeTDS: https://help.interfaceware.com/kb/904
 
 **How to use**
 1. connect mir wifi
