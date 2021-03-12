@@ -70,16 +70,24 @@ prerequisite:
       sudo gedit /etc/odbcinst.ini
 
       [FreeTDS]
+      
       Description=FreeTDS Driver
+      
       Driver = /usr/lib/x86_64-linux-gnu/odbc/libtdsodbc.so
+      
       UsageCount= 1
       
-      For Raspberry Pi 4 --- ARM64 --- Ubuntu 18.04
+      
+      ***For Raspberry Pi 4 --- ARM64 --- Ubuntu 18.04***
       
       [FreeTDS]
+      
       Description=FreeTDS Driver
+      
       Driver = /usr/lib/aarch64-linux-gnu/odbc/libtdsodbc.so
+      
       Setup = /usr/lib/aarch64-linux-gnu/odbc/libtdsS.so
+      
       UsageCount= 1
 
 3. For wifi setting via terminal: please refer to "50-cloud-init.yaml" 
