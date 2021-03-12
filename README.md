@@ -45,7 +45,7 @@ prerequisite:
          
          if pi4 can not find a suitable odbc driver manager
          
-         ** Need to manually install the unixODBC
+         ** Need to manually install the unixODBC from source: http://www.unixodbc.org/
 
 4.~~odbc driver:~~
    
