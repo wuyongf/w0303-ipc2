@@ -107,7 +107,7 @@ private:
 
     // connection info
     std::string ODBCConnectionStr_ = "" ;
-    std::string driver_ = "ODBC Driver 17 for SQL Server" ;
+    std::string driver_ = "FreeTDS" ;
     std::string server_ = "192.168.0.8";
     std::string database_ = "NW_mobile_robot_sys";
     std::string Uid_ = "sa";
@@ -129,15 +129,36 @@ private:
 
 yf::sql::sql_server::sql_server()
 {
-    //"Driver={SQL Server};Server=192.168.0.8;Database=NW_mobile_robot_system;Uid=sa;Pwd=Willsonic2010"
-    ODBCConnectionStr_ = "Driver={"+driver_+"};Server="+server_+";Database="+database_+";Uid="+Uid_+";Pwd="+Pwd_;
+    if (driver_ == "ODBC Driver 17 for SQL Server")
+    {
+        //"Driver={SQL Server};Server=192.168.0.8;Database=NW_mobile_robot_system;Uid=sa;Pwd=Willsonic2010"
+        ODBCConnectionStr_ = "Driver={"+driver_+"};Server="+server_+";Database="+database_+";Uid="+Uid_+";Pwd="+Pwd_;
+    }
+    else if (driver_ == "FreeTDS")
+    {
+        //"Driver={SQL Server};Server=192.168.0.8;Database=NW_mobile_robot_system;Uid=sa;Pwd=Willsonic2010"
+        ODBCConnectionStr_ = "Driver={"+driver_+"};Server="+server_+";Port=1433;Database="+database_+";Uid="+Uid_+";Pwd="+Pwd_;
+    }
+    else
+        std::cerr << "Error ODBC Driver!" << std::endl;
 }
 
 yf::sql::sql_server::sql_server(const std::string &driver, const std::string &server, const std::string &database,
                                 const std::string &Uid, const std::string &Pwd)
         : driver_(driver),  server_(server), database_(database), Uid_(Uid), Pwd_(Pwd)
 {
-    ODBCConnectionStr_ = "Driver={"+driver_+"};Server="+server_+";Database="+database_+";Uid="+Uid_+";Pwd="+Pwd_;
+    if (driver_ == "ODBC Driver 17 for SQL Server")
+    {
+        //"Driver={SQL Server};Server=192.168.0.8;Database=NW_mobile_robot_system;Uid=sa;Pwd=Willsonic2010"
+        ODBCConnectionStr_ = "Driver={"+driver_+"};Server="+server_+";Database="+database_+";Uid="+Uid_+";Pwd="+Pwd_;
+    }
+    else if (driver_ == "FreeTDS")
+    {
+        //"Driver={SQL Server};Server=192.168.0.8;Database=NW_mobile_robot_system;Uid=sa;Pwd=Willsonic2010"
+        ODBCConnectionStr_ = "Driver={"+driver_+"};Server="+server_+";Port=1433;Database="+database_+";Uid="+Uid_+";Pwd="+Pwd_;
+    }
+    else
+        std::cerr << "Error ODBC Driver!" << std::endl;
 }
 
 yf::sql::sql_server::~sql_server()
