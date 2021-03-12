@@ -4,9 +4,11 @@
 
 1. manual control mir via joystick (ros)
 
-2. ~~communication with mssql~~ 
+2. communication with mssql
 
-> SQL Server is not supported on ARM architecture.
+> SQL Server is not supported on ARM architecture. ~~MS ODBC Driver~~
+> However, we can use third-party ODBC Driver to realize this function.
+> unixODBC and FreeTDS
 
 3. *todo: communication with ipc1
 
@@ -15,7 +17,7 @@
 
 hardware: raspberry pi 4b
 
-platform: ubuntu 18.04
+platform: ubuntu 18.04 / ubuntu 20.04 (todo)
 
 prerequisite:
 
@@ -39,11 +41,11 @@ prerequisite:
    
    (2) Error 1:
          
-         if can not find a suitable odbc driver manager
+         if pi4 can not find a suitable odbc driver manager
          
          ** Need to manually install the unixODBC
 
-4. odbc driver:
+~~4. odbc driver:~~
    
    (1) https://docs.microsoft.com/en-us/sql/connect/odbc/linux-mac/installing-the-microsoft-odbc-driver-for-sql-server?view=sql-server-ver15
 
@@ -84,16 +86,19 @@ prerequisite:
       sudo netplan apply
       systemctl daemon-reload
       
-(4) todo: vnc for ubuntu 20.04: https://www.raspberrypi.org/forums/viewtopic.php?t=288769
+(4) *todo: VNC for ubuntu 20.04: https://www.raspberrypi.org/forums/viewtopic.php?t=288769
 
 (5) For Debug:
 
    a. CLion Prerequisite: 
    
       sudo apt install openjdk-11-jdk openjdk-11-jre
+      
+   b. Clion Installation
 
 
 **How to use**
+
 1. connect mir wifi
 2. check your ip address: 
             
@@ -109,4 +114,4 @@ prerequisite:
 
          roscore
          rosrun joy joy_node
-         rosrun mir_test teleop_mir
+         rosrun mir_test mir_xbox_test_01
