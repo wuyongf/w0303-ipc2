@@ -58,7 +58,11 @@ prerequisite:
 (2) odbcinst.ini config
 
       sudo gedit /etc/odbcinst.ini
-      
+
+      [FreeTDS]
+      Description=FreeTDS Driver
+      Driver = /usr/lib/x86_64-linux-gnu/odbc/libtdsodbc.so
+      UsageCount= 1
       
 
 (2) for wifi setting via terminal
