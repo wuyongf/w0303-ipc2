@@ -47,7 +47,7 @@ prerequisite:
          
          ** Need to manually install the unixODBC
 
-~~4. odbc driver:~~
+4.~~odbc driver:~~
    
    (1) https://docs.microsoft.com/en-us/sql/connect/odbc/linux-mac/installing-the-microsoft-odbc-driver-for-sql-server?view=sql-server-ver15
 
@@ -63,9 +63,9 @@ prerequisite:
    
 **Test**
 
-(1) unixODBC & FreeTDS: https://help.interfaceware.com/kb/904
+1. unixODBC & FreeTDS: https://help.interfaceware.com/kb/904
 
-(2) odbcinst.ini config
+2. odbcinst.ini config
 
       sudo gedit /etc/odbcinst.ini
 
@@ -82,29 +82,29 @@ prerequisite:
       Setup = /usr/lib/aarch64-linux-gnu/odbc/libtdsS.so
       UsageCount= 1
 
-(3) For wifi setting via terminal: please refer to "50-cloud-init.yaml" 
+3. For wifi setting via terminal: please refer to "50-cloud-init.yaml" 
 
       sudo gedit /etc/netplan/50-cloud-init.yaml
       sudo netplan apply
       systemctl daemon-reload
       
-(4) *todo: VNC for ubuntu 20.04: https://www.raspberrypi.org/forums/viewtopic.php?t=288769
+4. *todo: VNC for ubuntu 20.04: https://www.raspberrypi.org/forums/viewtopic.php?t=288769
 
-(5) For Debug:
+5. For Debug:
 
-   a. CLion Prerequisite: 
+   (1) CLion Prerequisite: 
    
       sudo apt install openjdk-11-jdk openjdk-11-jre
       
-   b. Clion Installation
+   (2) Clion Installation
 
-(6) Connection String Format:
+6. Connection String Format:
 
-   a. For MS ODBC Driver
+   (1) For MS ODBC Driver
       
       "Driver={SQL Server};Server=<ip address>;Database=<database_name>;Uid=<user_id>;Pwd=<password>"
       
-   b. For unixODBC and FreeTDS
+   (2) For unixODBC and FreeTDS
    
       "Driver={FreeTDS};Server=<ip address>;Port=1433;Database=<database_name>;Uid=<user_id>;Pwd=<password>"
 
