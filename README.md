@@ -55,6 +55,12 @@ prerequisite:
 
 (1) unixODBC & FreeTDS: https://help.interfaceware.com/kb/904
 
+(2) odbcinst.ini config
+
+      sudo gedit /etc/odbcinst.ini
+      
+      
+
 (2) for wifi setting via terminal
 
       sudo gedit /etc/netplan/50-cloud-init.yaml
