@@ -6,9 +6,9 @@
 
 2. communication with mssql
 
-> SQL Server is not supported on ARM architecture. ~~MS ODBC Driver~~
-> However, we can use third-party ODBC Driver to realize this function.
-> unixODBC and FreeTDS
+> SQL Server is not supported on ARM architecture. ~~MS ODBC Driver~~. 
+> However, we can use third-party ODBC Driver to realize this function,
+> which are unixODBC and FreeTDS. Fpr more info, please refer to https://help.interfaceware.com/kb/904
 
 3. *todo: communication with ipc1
 
