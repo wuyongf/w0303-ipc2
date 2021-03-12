@@ -102,11 +102,11 @@ prerequisite:
 
    (1) For MS ODBC Driver
       
-      "Driver={SQL Server};Server=<ip address>;Database=<database_name>;Uid=<user_id>;Pwd=<password_>"
+      "Driver={SQL Server};Server=<ip_address>;Database=<database_name>;Uid=<user_id>;Pwd=<user_password>"
       
    (2) For unixODBC and FreeTDS
    
-      "Driver={FreeTDS};Server=<ip address>;Port=1433;Database=<database_name>;Uid=<user_id>;Pwd=<password_>"
+      "Driver={FreeTDS};Server=<ip_address>;Port=1433;Database=<database_name>;Uid=<user_id>;Pwd=<user_password>"
 
 **How to use**
 
