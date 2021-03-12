@@ -98,6 +98,15 @@ prerequisite:
       
    b. Clion Installation
 
+(6) Connection String Format:
+
+   a. For MS ODBC Driver
+      
+      "Driver={SQL Server};Server=<ip address>;Database=<database_name>;Uid=<user_id>;Pwd=<password>"
+      
+   b. For unixODBC and FreeTDS
+   
+      "Driver={FreeTDS};Server=<ip address>;Port=1433;Database=<database_name>;Uid=<user_id>;Pwd=<password>"
 
 **How to use**
 
