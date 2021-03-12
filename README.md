@@ -50,6 +50,19 @@ prerequisite:
 6. xbox controller driver
 
    (1)https://github.com/medusalix/xow
+   
+**Test**
+
+(1) unixODBC & FreeTDS: https://help.interfaceware.com/kb/904
+
+(2) for wifi setting via terminal
+
+      sudo gedit /etc/netplan/50-cloud-init.yaml
+      sudo netplan apply
+      systemctl daemon-reload
+      
+ (3) vnc for ubuntu 20.04: https://www.raspberrypi.org/forums/viewtopic.php?t=288769
+
 
 **How to use**
 1. connect mir wifi
