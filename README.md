@@ -36,6 +36,12 @@ prerequisite:
 3. nanodbc
 
    (1) https://nanodbc.github.io/nanodbc/install.html#
+   
+   (2) Error 1:
+         
+         if can not find a suitable odbc driver manager
+         
+         ** Need to manually install the unixODBC
 
 4. odbc driver:
    
