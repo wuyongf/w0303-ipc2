@@ -78,13 +78,19 @@ prerequisite:
       Setup = /usr/lib/aarch64-linux-gnu/odbc/libtdsS.so
       UsageCount= 1
 
-(2) for wifi setting via terminal
+(3) For wifi setting via terminal: please refer to "50-cloud-init.yaml" 
 
       sudo gedit /etc/netplan/50-cloud-init.yaml
       sudo netplan apply
       systemctl daemon-reload
       
- (3) vnc for ubuntu 20.04: https://www.raspberrypi.org/forums/viewtopic.php?t=288769
+(4) todo: vnc for ubuntu 20.04: https://www.raspberrypi.org/forums/viewtopic.php?t=288769
+
+(5) For Debug:
+
+   a. CLion Prerequisite: 
+   
+      sudo apt install openjdk-11-jdk openjdk-11-jre
 
 
 **How to use**
