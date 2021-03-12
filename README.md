@@ -64,6 +64,13 @@ prerequisite:
       Driver = /usr/lib/x86_64-linux-gnu/odbc/libtdsodbc.so
       UsageCount= 1
       
+      For Raspberry Pi 4 --- ARM64 --- Ubuntu 18.04
+      
+      [FreeTDS]
+      Description=FreeTDS Driver
+      Driver = /usr/lib/aarch64-linux-gnu/odbc/libtdsodbc.so
+      Setup = /usr/lib/aarch64-linux-gnu/odbc/libtdsS.so
+      UsageCount= 1
 
 (2) for wifi setting via terminal
 
