@@ -8,7 +8,7 @@
 
 > SQL Server is not supported on ARM architecture. ~~MS ODBC Driver~~. 
 > 
-> However, we can use third-party ODBC Driver to realize this function,which are unixODBC and FreeTDS. 
+> However, we can use third-party ODBC Drivers to realize this function,which are unixODBC and FreeTDS. 
 > 
 > For more info, please refer to https://help.interfaceware.com/kb/904
 
