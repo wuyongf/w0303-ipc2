@@ -176,6 +176,10 @@ find_package(Poco REQUIRED COMPONENTS Foundation Net Zip )
 add_executable(mir_poco src/mir_poco.cpp)
 target_link_libraries(mir_poco  PUBLIC   ${catkin_LIBRARIES} glog::glog nanodbc Poco::Foundation Poco::Zip Poco::Net)
 
+# ubuntu ping function
+add_executable(ubuntu_ping_testing useful_functions/ubuntu_ping_testing.cpp)
+target_link_libraries(ubuntu_ping_testing  PUBLIC   ${catkin_LIBRARIES})
+
 #############
 ## Install ##
 #############
