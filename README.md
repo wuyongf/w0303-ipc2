@@ -63,46 +63,51 @@ prerequisite:
    
 **Test**
 
-1. unixODBC & FreeTDS: https://help.interfaceware.com/kb/904
+1. unixODBC & FreeTDS: 
+      
+         https://help.interfaceware.com/kb/904
 
 2. odbcinst.ini config
 
-      sudo gedit /etc/odbcinst.ini
+         sudo gedit /etc/odbcinst.ini
 
-      [FreeTDS]
+   (1) For AMD processor 
       
-      Description=FreeTDS Driver
+         [FreeTDS]
       
-      Driver = /usr/lib/x86_64-linux-gnu/odbc/libtdsodbc.so
+         Description=FreeTDS Driver
       
-      UsageCount= 1
+         Driver = /usr/lib/x86_64-linux-gnu/odbc/libtdsodbc.so
       
+         UsageCount= 1
+
+   (2) For ARM processor: Raspberry Pi 4 --- Ubuntu 18.04
       
-      ***For Raspberry Pi 4 --- ARM64 --- Ubuntu 18.04***
+         [FreeTDS]
       
-      [FreeTDS]
+         Description=FreeTDS Driver
       
-      Description=FreeTDS Driver
+         Driver = /usr/lib/aarch64-linux-gnu/odbc/libtdsodbc.so
       
-      Driver = /usr/lib/aarch64-linux-gnu/odbc/libtdsodbc.so
+         Setup = /usr/lib/aarch64-linux-gnu/odbc/libtdsS.so
       
-      Setup = /usr/lib/aarch64-linux-gnu/odbc/libtdsS.so
-      
-      UsageCount= 1
+         UsageCount= 1
 
 3. For wifi setting via terminal: please refer to "50-cloud-init.yaml" 
 
-      sudo gedit /etc/netplan/50-cloud-init.yaml
-      sudo netplan apply
-      systemctl daemon-reload
+         sudo gedit /etc/netplan/50-cloud-init.yaml
+         sudo netplan apply
+         systemctl daemon-reload
       
-4. *todo: VNC for ubuntu 20.04: https://www.raspberrypi.org/forums/viewtopic.php?t=288769
+4. *todo: VNC for ubuntu 20.04: 
+      
+         https://www.raspberrypi.org/forums/viewtopic.php?t=288769
 
 5. For Debug:
 
    (1) CLion Prerequisite: 
    
-      sudo apt install openjdk-11-jdk openjdk-11-jre
+         sudo apt install openjdk-11-jdk openjdk-11-jre
       
    (2) Clion Installation
 
@@ -110,11 +115,11 @@ prerequisite:
 
    (1) For MS ODBC Driver
       
-      "Driver={SQL Server};Server=<ip_address>;Database=<database_name>;Uid=<user_id>;Pwd=<user_password>"
+         "Driver={SQL Server};Server=<ip_address>;Database=<database_name>;Uid=<user_id>;Pwd=<user_password>"
       
    (2) For unixODBC and FreeTDS
    
-      "Driver={FreeTDS};Server=<ip_address>;Port=1433;Database=<database_name>;Uid=<user_id>;Pwd=<user_password>"
+         "Driver={FreeTDS};Server=<ip_address>;Port=1433;Database=<database_name>;Uid=<user_id>;Pwd=<user_password>"
 
 **How to use**
 
