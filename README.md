@@ -2,15 +2,9 @@
 
 **Overall Functions**
 
-1. manual control mir via joystick (ros)
+1. done: manual control mir via joystick (ros)
 
-2. communication with mssql
-
-> SQL Server is not supported on ARM architecture. ~~MS ODBC Driver~~. 
-> 
-> However, we can use third-party ODBC Drivers to realize this function,which are unixODBC and FreeTDS. 
-> 
-> For more info, please refer to https://help.interfaceware.com/kb/904
+2. done: communication with mssql
 
 3. *todo: communication with ipc1
 
@@ -23,55 +17,88 @@ platform: ubuntu 18.04 / ubuntu 20.04 (todo)
 
 prerequisite:
 
-1. ros melodic:
-   
-   (1) https://www.hackster.io/shahizat005/getting-started-with-ros-melodic-on-raspberry-pi-4-model-b-cbdec8
+1. system installation
 
-   (2) http://wiki.ros.org/melodic/Installation/Ubuntu
+   workflow:
+
+   (1) install ubuntu 20.04 server 
+
+   (2) update && upgrade software to latest version
+
+   (3) install ubuntu 20.04 desktop
    
-   (3) https://blog.csdn.net/kinglarry1/article/details/107155753
+   link: 
    
-2. glog
+   (1) https://qengineering.eu/install-ubuntu-20.04-on-raspberry-pi-4.html
+    
+2. remote control(vnc) installation
+
+   link: 
+   
+   (1) https://www.raspberrypi.org/forums/viewtopic.php?t=288769
+
+3. ros installation
+   
+   link: 
+   
+   (1) http://wiki.ros.org/melodic/Installation/Ubuntu
+   
+4. xbox controller driver
+
+   link: 
+   
+   (1) https://github.com/medusalix/xow
+   
+5. ros-joy-package installation
+
+   link: 
+   
+   (1) http://wiki.ros.org/joy/Tutorials
+   
+6. glog installation (LOG)
+   
+   link:
    
    (1) https://github.com/google/glog
 
    (2) https://blog.csdn.net/qq_22634949/article/details/101718879
 
-3. nanodbc
+3. nanodbc intallation (MSSQL API)
+
+   link:
 
    (1) https://nanodbc.github.io/nanodbc/install.html#
    
-   (2) Error 1:
+   Error:
          
-         if pi4 can not find a suitable odbc driver manager
+   (1) if pi4 can not find a suitable odbc driver manager
          
-         ** Need to manually install the unixODBC from source: http://www.unixodbc.org/
+   ** Need to manually install the unixODBC from source: http://www.unixodbc.org/ **
 
-4.~~odbc driver:~~
+4.odbc driver intallation and usage
+      
+   Error explaination:
    
-   (1) https://docs.microsoft.com/en-us/sql/connect/odbc/linux-mac/installing-the-microsoft-odbc-driver-for-sql-server?view=sql-server-ver15
-
-   (2) https://stackoverflow.com/questions/43606832/r-unixodbcdriver-managercant-open-lib-sql-server-file-not-found/51266453
-
-5. ros-joy-package
-
-   (1)http://wiki.ros.org/joy/Tutorials
+   >Normally, we will choose MSSQL ODBC Driver. 
+   >Link:  https://docs.microsoft.com/en-us/sql/connect/odbc/linux-mac/installing-the-microsoft-odbc-driver-for-sql-server?view=sql-server-ver15
+   >
+   > However, MSSQL ODBC Driver is not supported on ARM architecture. 
+   > 
+   > We can use third-party ODBC Drivers instead, which are unixODBC and FreeTDS. 
+   > 
+   > For more info, please refer to https://help.interfaceware.com/kb/904
+  
+   workflow:
    
-6. xbox controller driver
-
-   (1)https://github.com/medusalix/xow
-   
-**Test**
-
-1. unixODBC & FreeTDS: 
+   (1) unixODBC & FreeTDS Installation: 
       
          https://help.interfaceware.com/kb/904
 
-2. odbcinst.ini config
+   (2) odbcinst.ini config
 
          sudo gedit /etc/odbcinst.ini
 
-   (1) For AMD processor 
+      **a. For AMD processor** 
       
          [FreeTDS]
       
@@ -81,7 +108,7 @@ prerequisite:
       
          UsageCount= 1
 
-   (2) For ARM processor: Raspberry Pi 4 --- Ubuntu 18.04
+      **b. For ARM processor: Raspberry Pi 4 --- Ubuntu 18.04** 
       
          [FreeTDS]
       
@@ -91,35 +118,33 @@ prerequisite:
       
          Setup = /usr/lib/aarch64-linux-gnu/odbc/libtdsS.so
       
-         UsageCount= 1
+         UsageCount= 1    
 
-3. For wifi setting via terminal: please refer to "50-cloud-init.yaml" 
+   (3) Usage: Connection String Format
+
+      a. For MS ODBC Driver
+      
+         "Driver={SQL Server};Server=<ip_address>;Database=<database_name>;Uid=<user_id>;Pwd=<user_password>"
+      
+      b. For unixODBC and FreeTDS
+   
+         "Driver={FreeTDS};Server=<ip_address>;Port=1433;Database=<database_name>;Uid=<user_id>;Pwd=<user_password>"
+
+**Ubuntu Configuration**
+
+1. For wifi setting via terminal: please refer to "50-cloud-init.yaml" 
 
          sudo gedit /etc/netplan/50-cloud-init.yaml
          sudo netplan apply
          systemctl daemon-reload
       
-4. *todo: VNC for ubuntu 20.04: 
-      
-         https://www.raspberrypi.org/forums/viewtopic.php?t=288769
-
-5. For Debug:
+2. For Debug:
 
    (1) CLion Prerequisite: 
    
          sudo apt install openjdk-11-jdk openjdk-11-jre
       
    (2) Clion Installation
-
-6. Connection String Format:
-
-   (1) For MS ODBC Driver
-      
-         "Driver={SQL Server};Server=<ip_address>;Database=<database_name>;Uid=<user_id>;Pwd=<user_password>"
-      
-   (2) For unixODBC and FreeTDS
-   
-         "Driver={FreeTDS};Server=<ip_address>;Port=1433;Database=<database_name>;Uid=<user_id>;Pwd=<user_password>"
 
 **How to use**
 
@@ -139,3 +164,9 @@ prerequisite:
          roscore
          rosrun joy joy_node
          rosrun mir_test mir_xbox_test_01
+         
+**Todo**
+
+1. auto run the program when the ubuntu system starts up
+2. test ros bridge and the virtual joystick
+3. 
