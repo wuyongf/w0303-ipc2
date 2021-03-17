@@ -43,6 +43,8 @@ prerequisite:
    
    (1) http://wiki.ros.org/melodic/Installation/Ubuntu
    
+   (2) https://blog.csdn.net/kinglarry1/article/details/107155753
+   
 4. xbox controller driver
 
    link: 
