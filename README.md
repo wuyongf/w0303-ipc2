@@ -13,7 +13,7 @@
 
 hardware: raspberry pi 4b
 
-platform: ubuntu 18.04 / ubuntu 20.04 (todo)
+platform: ubuntu 20.04
 
 prerequisite:
 
@@ -98,6 +98,8 @@ prerequisite:
 
    (2) odbcinst.ini config
 
+      **note: Need to locate which odbcinst.ini is read by ODBC Manager: unixODBC
+
          sudo gedit /etc/odbcinst.ini
 
       **a. For AMD processor** 
@@ -161,6 +163,7 @@ prerequisite:
          export ROS_MASTER_URI=http://192.168.12.20:11311
          export ROS_HOSTNAME=[your ip address]  //e.g. export ROS_HOSTNAME=192.168.12.254
          source ~/.bashrc
+         
 4. run the program 
 
          roscore
