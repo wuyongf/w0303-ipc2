@@ -172,6 +172,40 @@ prerequisite:
          
 **Todo**
 
-1. auto run the program when the ubuntu system starts up
-2. test ros bridge and the virtual joystick
-3. 
+1. auto run the program when the ubuntu system starts up (done)
+   
+   (1) reference: https://askubuntu.com/questions/1151080/how-do-i-run-a-script-as-sudo-at-boot-time-on-ubuntu-18-04-server
+   
+   (2) create & configure a service
+            
+         cd /etc/systemd/system
+         sudo touch ipc2.service
+            
+         sudo gedit ipc2.service
+              
+            [Unit]
+            Description=ipc2 script
+
+            [Service]
+            ExecStart=/home/ubuntu/catkin_ws/src/mir_test/scripts/ipc2_startup.sh
+
+            [Install]
+            WantedBy=multi-user.target
+            
+   (3) create a script
+   
+         cd ~/catkin_ws/src/mir_test/scripts
+         touch ipc2_startup.txt (for now)
+         
+   (4) enable the service
+   
+         systemctl enable ipc2.service
+         
+   (5) keep checking the status
+   
+         a. system setting --- startup application --- config --- command
+         
+         gnome-terminal -x journalctl -f -u ipc2.service
+         
+3. test ros bridge and the virtual joystick
+4. 
