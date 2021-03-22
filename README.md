@@ -174,7 +174,11 @@ prerequisite:
 
 1. auto run the program when the ubuntu system starts up (done)
    
-   (1) reference: https://askubuntu.com/questions/1151080/how-do-i-run-a-script-as-sudo-at-boot-time-on-ubuntu-18-04-server
+   (1) reference: 
+      
+      https://askubuntu.com/questions/1151080/how-do-i-run-a-script-as-sudo-at-boot-time-on-ubuntu-18-04-server
+      
+      https://blog.csdn.net/liurunjiang/article/details/78595073?utm_source=blogxgwz0
    
    (2) create & configure a service
             
