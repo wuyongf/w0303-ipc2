@@ -149,30 +149,14 @@ prerequisite:
          sudo apt install openjdk-11-jdk openjdk-11-jre
       
    (2) Clion Installation
-
-**How to use**
-
-1. connect mir wifi
-2. check your ip address: 
-            
-         ifconfig
    
-3. ros ip configuration
+3. For Backup:
+
+   (1) Reference:
    
-         gedit ~/.bashrc
-         export ROS_MASTER_URI=http://192.168.12.20:11311
-         export ROS_HOSTNAME=[your ip address]  //e.g. export ROS_HOSTNAME=192.168.12.254
-         source ~/.bashrc
-         
-4. run the program 
-
-         roscore
-         rosrun joy joy_node
-         rosrun mir_test mir_xbox_test_01
-         
-**Todo**
-
-1. auto run the program when the ubuntu system starts up (done)
+   https://thepihut.com/blogs/raspberry-pi-tutorials/17789160-backing-up-and-restoring-your-raspberry-pis-sd-card#:~:text=Using%20Windows&text=Once%20you%20open%20Win32%20Disk,backed%20up%20to%20your%20PC.
+   
+4. Auto run the program when the ubuntu system startup
    
    (1) reference: 
       
@@ -210,6 +194,31 @@ prerequisite:
          a. system setting --- startup application --- config --- command
          
          gnome-terminal -x journalctl -f -u ipc2.service
+
+**How to use**
+
+1. connect mir wifi
+2. check your ip address: 
+            
+         ifconfig
+   
+3. ros ip configuration
+   
+         gedit ~/.bashrc
+         export ROS_MASTER_URI=http://192.168.12.20:11311
+         export ROS_HOSTNAME=[your ip address]  //e.g. export ROS_HOSTNAME=192.168.12.254
+         source ~/.bashrc
          
-3. test ros bridge and the virtual joystick
-4. 
+4. run the program 
+
+         roscore
+         rosrun joy joy_node
+         rosrun mir_test mir_xbox_test_01
+         
+**Todo**
+
+1. use static ip address. make sure the program is stable.
+         
+2. test ros bridge and the virtual joystick
+
+3. 
