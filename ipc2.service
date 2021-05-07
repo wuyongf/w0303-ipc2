@@ -1,0 +1,8 @@
+[Unit]
+Description=ipc2 script
+
+[Service]
+ExecStart=/home/ubuntu/catkin_ws/src/mir_test/scripts/ipc2_startup.sh
+
+[Install]
+WantedBy=multi-user.target
