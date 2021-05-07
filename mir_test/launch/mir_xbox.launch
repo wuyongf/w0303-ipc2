@@ -1,0 +1,9 @@
+<launch>
+
+  <node pkg="joy" name="joy_node" type="joy_node">
+  </node>
+
+  <node pkg="mir_test" name="mir_xbox_test_01" type="mir_xbox_test_01">
+  </node>
+
+</launch>
